@@ -21,28 +21,3 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-env/
-venv/
-ENV/
-venv.bak/
-*.env
-backend/venv/
-
-
-# Flask cache and settings
-instance/
-*.sqlite3
-
-# IDE settings
-.vscode/
-.idea/
-
-# macOS junk
-.DS_Store
-
