@@ -20,6 +20,7 @@ class Transaction(db.Model):
     amount = db.Column(db.Float, nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     recurring_date = db.Column(db.DateTime, nullable=True)
+    transaction_type = db.Column(db.String(50), nullable=False, default='expense')  # 'expense' or 'income'
     subcategory_id = db.Column(db.Integer, db.ForeignKey('subcategory.id'), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
@@ -31,6 +32,7 @@ class Transaction(db.Model):
             'amount': self.amount,
             'date': self.date.isoformat(),
             'recurring_date': self.recurring_date.isoformat() if self.recurring_date else None,
+            'transaction_type': self.transaction_type,
             'category': self.subcategory.category.name,
             'subcategory': self.subcategory.name,
             'created_at': self.created_at.isoformat(),
@@ -52,6 +54,7 @@ class Saving(db.Model):
             'name': self.name,
             'amount': self.amount,
             'goal': self.goal,
+            'difference': self.goal - self.amount,
             'date': self.date.isoformat(),
             'created_at': self.created_at.isoformat(),
             'updated_at': self.updated_at.isoformat()
