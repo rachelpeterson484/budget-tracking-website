@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Budget from './subpages/Budget';
 import Investments from './subpages/Investments';
 import Debt from './subpages/Debt';
+import Savings from './subpages/Savings';
 
 // Get the base URL from environment variable or default to empty string
 const basename = process.env.PUBLIC_URL || '';
@@ -45,6 +46,7 @@ function App() {
             <Route path="/budget" element={<Budget />} />
             <Route path="/investments" element={<Investments />} />
             <Route path="/debt" element={<Debt />} />
+            <Route path="/savings" element={<Savings />} />
           </Routes>
         </main>
       </div>

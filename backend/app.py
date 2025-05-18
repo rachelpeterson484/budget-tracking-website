@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import logging
-from models import db, Category, Subcategory, Transaction
+from models import db, Category, Subcategory, Transaction, Saving
 from datetime import datetime
 
 # Configure logging
@@ -86,6 +86,35 @@ def get_categories():
         } for c in categories])
     except Exception as e:
         logger.error(f"Error getting categories: {str(e)}")
+        return jsonify({"error": "Internal server error"}), 500
+
+@app.route('/api/savings', methods=['GET'])
+def get_savings():
+    try:
+        savings = Saving.query.all()
+        return jsonify([s.to_dict() for s in savings])
+    except Exception as e:
+        logger.error(f"Error getting savings: {str(e)}")
+        return jsonify({"error": "Internal server error"}), 500
+
+@app.route('/api/savings', methods=['POST'])
+def create_saving():
+    try:
+        data = request.get_json()
+        
+        # Create saving
+        saving = Saving(
+            name=data['name'],
+            amount=data['amount'],
+            goal=data['goal'],
+        )
+        
+        db.session.add(saving)
+        db.session.commit()
+        
+        return jsonify(saving.to_dict()), 201
+    except Exception as e:
+        logger.error(f"Error creating saving: {str(e)}")
         return jsonify({"error": "Internal server error"}), 500
 
 if __name__ == "__main__":
